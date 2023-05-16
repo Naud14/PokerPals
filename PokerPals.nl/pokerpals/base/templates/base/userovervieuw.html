@@ -1,0 +1,16 @@
+{%extends 'base/base.html'%}
+
+{%load static %}
+{%block content%}
+<h1> User Overvieuw</h1>
+    {% for user in users %}
+        <strong> Name : </strong> {{user.user.username}}
+        
+        <a href="{% url 'userstats' user.user.username%}"><p><strong>{{user.user.username}}'s Stats</strong></p></a>
+        <br>
+        <br>
+    {% endfor %}
+
+
+
+{%endblock content%}

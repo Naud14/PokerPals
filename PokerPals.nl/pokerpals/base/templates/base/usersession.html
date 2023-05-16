@@ -1,0 +1,22 @@
+{%extends 'base/base.html'%}
+{% load mathfilters %}
+
+{%load static %}
+{%block content%}
+<h1> User Session {{session_id}} Info </h1>
+    {% for user_session in session %}
+        <strong> Name : </strong> {{user_session.user.username}}<br>
+        <strong> Begin Stack : </strong> {{user_session.start_roll}} euro<br>
+        <strong> Added Chips : </strong> {{user_session.added_chips}} euro<br>
+        <strong> End Stack : </strong> {{user_session.end_roll}} euro <br>
+
+        {% if user_session.end_roll|sub:user_session.added_chips|sub:user_session.start_roll >= 0 %}
+              <strong> Result: <strong style="color:green;">{{ user_session.end_roll|sub:user_session.added_chips|sub:user_session.start_roll|floatformat:2}}</strong></strong>
+        {% else %}
+              <strong> Result: <strong style="color:red;">{{ user_session.end_roll|sub:user_session.added_chips|sub:user_session.start_roll|floatformat:2}}</strong></strong>
+        {% endif %}
+        <br><br>
+    {% endfor %}
+
+
+{%endblock content%}

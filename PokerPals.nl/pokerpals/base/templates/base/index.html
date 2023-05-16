@@ -1,0 +1,19 @@
+{%extends 'base/base.html'%}
+{%load static %}
+{%block content%}
+<h1>PokerPals Oldenzaal</h1>
+{% if user.is_authenticated%}
+    <h3> Welcome back  <a href="{% url 'userstats' user.username%}"><strong> {{user.username}}</strong></a>! </h3>
+{% endif %}
+<p>This website is made on the instructions of PokerPals Oldenzaal. Especially meant for members so they can keep track of their progress and profits. <br>
+    Feel free to take a look and discover the magic behind statistics BUT be awere of shocking results if you do not make much profit :0<br>
+    
+
+    <br>If you would like to join PokerPals Oldenzaal please contact Stein! <br>
+    For any improvements, questions or suggestions on this website, please contact Naud!<br>
+</p>
+
+
+
+
+{%endblock content%}

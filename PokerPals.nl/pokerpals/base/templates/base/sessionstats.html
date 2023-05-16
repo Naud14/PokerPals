@@ -1,0 +1,60 @@
+{%extends 'base/base.html'%}
+
+{%load static %}
+{%block content%}
+<h1>General Session Statistics</h1>
+    <strong> Total played sessions : </strong> {{session_stats.total_played_sessions}}<br>
+    <strong> Total played money : </strong> {{session_stats.total_played_money}} euro<br>
+    <strong> Total begin money : </strong> {{session_stats.total_begin_money}} euro<br>
+    <strong> Total added money : </strong> {{session_stats.total_added_money}} euro<br>
+    <strong> Total end money : </strong> {{session_stats.total_end_money}} euro<br>
+    <br>
+    <strong> Average money played per session : </strong> {{session_stats.average_played_money_per_session|floatformat:2}} euro<br>
+    <strong> Average begin money per session : </strong> {{session_stats.average_begin_money_per_session|floatformat:2}} euro<br>
+    <strong> Average added money per session : </strong> {{session_stats.average_added_money_per_session|floatformat:2}} euro<br>
+    <strong> Average end money per session : </strong> {{session_stats.average_end_money_per_session|floatformat:2}} euro<br>
+    <br>
+
+<h1> Information per session </h1>
+    <table>
+        <tr>
+          <th>Session</th>
+          <th>Date</th>
+          <th>Host</th>
+          <th>Time</th>
+          <th>SB</th>
+          <th>BB</th>
+          <th>72o</th>
+          <th>Straddle</th>
+          <th>Link</th>
+        </tr>
+        {% for session in sessions %}
+        <tr>
+          <td>{{ session.session_id}}</td>
+          <td>{{ session.date}}</td>
+          <td>{{ session.host}}</td>
+          <td>{{ session.time_delta}}</td>
+          <td>{{ session.small_blind}}</td>
+          <td>{{ session.big_blind}}</td>
+
+          {% if session.seven_two_off == True %}
+          <td> On </td>
+          {% else %}
+          <td> Off </td>
+          {% endif %}
+
+          {% if session.straddle == True %}
+          <td> On </td>
+          {% else %}
+          <td> Off </td>
+          {% endif %}
+          <td><a href="{% url 'usersession' session.session_id%}"><p><strong>Session {{session.session_id}} results</strong></p></a></td>
+        </tr>
+        {% endfor %}
+      </table>
+    <br>
+    <l4> -> If you win with 72 off-suited, you get 1 BB from every player at the table.</l4><br>
+    <l4> -> A straddle bet is an optional and voluntary blind bet made by a player after the posting of the small and big blinds, but before cards are dealt.</l4>
+    
+
+{%endblock content%}

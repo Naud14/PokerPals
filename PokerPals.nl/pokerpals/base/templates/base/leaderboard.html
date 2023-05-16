@@ -1,0 +1,65 @@
+{%extends 'base/base.html'%}
+
+{%load static %}
+{%block content%}
+<h1> PokerPals Leaderboard!</h1>
+
+{% for value, key in leaderboard_info.items %}
+    {% if value == "average_session_dictionary"%}
+        <h3> Average Session Result</h3>
+            <table>
+                <tr>
+                <th></th> 
+                <th>Name</th>
+                <th>Result</th>
+                </tr>
+                {% for item, testitem in key.items %}
+                <tr>
+                <td><strong>{{ forloop.counter }}<strong></td>
+                <td>{{ item}}</td>
+                {% for result, final in testitem.items%}
+                {% if final >= 0 %}
+                    <td style="color:green;">{{ final|floatformat:2 }}</td>
+                {% else %}
+                    <td style="color:red;">{{ final|floatformat:2 }}</td>
+                {% endif %}
+                </tr>
+                {% endfor %}
+                {% endfor %}
+            </table>
+            {% endif %}
+            {% endfor %}
+<br>
+<br>
+<br>
+{% for value, key in leaderboard_info.items %}
+{% if value == "average_hour_dictionary"%}
+    <h3> Average Hour Result</h3>
+        <table>
+            <tr>
+            <th></th> 
+            <th>Name</th>
+            <th>Result</th>
+            </tr>
+            {% for item, testitem in key.items %}
+            <tr>
+            <td ><strong>{{ forloop.counter }}<strong></td>
+            <td>{{ item }}</td>
+            {% for result, final in testitem.items%}
+                {% if final >= 0 %}
+                    <td style="color:green;">{{ final|floatformat:2 }}</td>
+                {% else %}
+                    <td style="color:red;">{{ final|floatformat:2 }}</td>
+                {% endif %}
+
+
+            </tr>
+            {% endfor %}
+            {% endfor %}
+        </table>
+        {% endif %}
+        {% endfor %}
+
+
+
+{%endblock content%}

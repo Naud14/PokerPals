@@ -1,0 +1,50 @@
+{%extends 'base/base.html'%}
+{% load mathfilters %}
+
+{%load static %}
+{%block content%}
+<h2> General Player Statistics {{ name}} </h2>
+    <strong> Played sessions : </strong> {{user_stats.played_sessions}}<br>
+    <strong> Total begin stack : </strong> {{user_stats.total_begin_stack}}<br>
+    <strong> Total end stack : </strong> {{user_stats.total_end_stack}}<br>
+    <strong> Total added chips : </strong> {{user_stats.total_added_chips}}<br>
+    <strong> Total played hours : </strong> {{user_stats.total_played_hours}}<br>
+    <strong> Total session result  : </strong> {{user_stats.total_session_profits|floatformat:2}}<br><br>
+    <strong> Average begin stack : </strong> {{user_stats.average_begin_stack|floatformat:2}}<br>
+    <strong> Avergae end stack : </strong> {{user_stats.average_end_stack|floatformat:2}}<br>
+    <strong> Average added chips : </strong> {{user_stats.average_added_chips|floatformat:2}}<br>
+    <strong> Average session result : </strong> {{user_stats.average_session_profit|floatformat:2}}<br><br>
+    <strong> Average hourly result : </strong>
+    {% if user_stats.average_hour_profit >= 0 %}
+        <strong style="color:green;">{{ user_stats.average_hour_profit|floatformat:2 }}</strong>
+    {% else %}
+       <strong style="color:red;">{{ user_stats.average_hour_profit|floatformat:2 }}</strong>
+    {% endif %}
+    <br>
+
+
+<h2> Played sessions </h2>
+    <table>
+        <tr>
+          <th>Date</th>
+          <th>Buy in</th>
+          <th>Added</th>
+          <th>End</th>
+          <th>Result</th>
+        </tr>
+        {% for information in played_sessions %}
+        <tr>
+          <td>{{ information.session}}</td>
+          <td>{{ information.start_roll}}</td>
+          <td>{{ information.added_chips}}</td>
+          <td>{{ information.end_roll}}</td>
+          {% if information.end_roll|sub:information.added_chips|sub:information.start_roll >= 0 %}
+              <td style="color:green;">{{ information.end_roll|sub:information.added_chips|sub:information.start_roll|floatformat:2}}</td>
+          {% else %}
+              <td style="color:red;">{{ information.end_roll|sub:information.added_chips|sub:information.start_roll|floatformat:2}}</td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </table>
+
+{%endblock content%}
